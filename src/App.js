@@ -11,41 +11,37 @@ import Messager from "./components/pages/Messages/Messager";
 import "./style.css";
 
 export default function App() {
-    const [userData, setUserData] = useState({
-        token: undefined,
-        user: undefined,
+    let [token, setToken] = useState({
+        token: undefined
     })
+    let [userData, setUserData] = useState({})
 
     useEffect(() => {
         const checkLoggedIn = async () => {
-            let token = localStorage.getItem("auth-token");
-            if(token === null) {
+            let storageToken = localStorage.getItem("auth-token");
+            setToken({token: storageToken});
+            if(storageToken === null) {
                 localStorage.setItem("auth-token", "");
-                token = "";
             }
-            const tokenRes = await Axios.post(
-                "http://localhost:5000/users/tokenValid",
-                null,
-                {headers: {"x-auth-token": token}}
+            const tokenRes = await Axios.get(
+                "http://localhost:5000/users/resolve-token", //TODO adapt users/ api endpoint for resolving with token 
+                {headers: {"x-auth-token": storageToken}}
             );
-            if(tokenRes.data) {
-                const userRes = await Axios.get(
-                    "http://localhost:5000/users/",
-                    {headers: {"x-auth-token": token},
-                });
-                setUserData({
-                    token,
-                    user: userRes.data,
-                })
-            }
+            setToken(tokenRes)
+            setUserData({
+                id: tokenRes.data.id,
+                icon: tokenRes.data.icon,
+                displayName: tokenRes.data.displayName,
+                discriminator: tokenRes.data.discriminator
+            })
+                
         }
-
         checkLoggedIn();
     }, [])
 
     return <>
         <BrowserRouter>
-        <UserContext.Provider value={{userData, setUserData}}>
+        <UserContext.Provider value={{userData, setUserData, token, setToken}}>
             <Header />
                 <Switch>
                     <Route exact path="/" component={Home} />

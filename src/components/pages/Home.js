@@ -3,11 +3,11 @@ import Messager from './Messages/Messager';
 import UserContext from "../../context/UserContext";
 
 export default function Home() {
-    const {userData} = useContext(UserContext);
+    const {token} = useContext(UserContext);
 
     return (
         <div>
-            {userData?.token ? (
+            {token ? (
                 <Messager />
             ) : (
                 <></>

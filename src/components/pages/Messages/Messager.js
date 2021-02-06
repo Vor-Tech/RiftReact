@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import UserContext from "../../../context/UserContext";
 
 // import config from "./config";
@@ -14,48 +14,42 @@ import "./Messager.css";
 
 export default function Messager() {
   
-  const socket = io("http://localhost:8080");
+  const socket = useRef();
 
   const {userData, setUserData} = useContext(UserContext);
-
-  const username = userData.user?.displayName;
-  console.log(username);
-
+  
   const [content, setContent] = useState("");
   const [chats, setChats] = useState([]);
-
+  let username;
   const scrollToBottom=()=> {
     const chat = document.getElementById("chat");
     chat.scrollTop = chat.scrollHeight;
   }
 
   useEffect(() => {
-    socket.on("connection", () => {
+    socket.current = io("http://localhost:8080");
+    socket.current.on('connect', () => {
       console.log("Connection Established");
     });
     // Load the last 10 messages in the window.
-    socket.on("init", (msg) => {
+    socket.current.on("init", (msg) => {
       let msgReversed = msg.reverse();
-      console.log('msg:', msg);
-      console.log('msgrev:', msgReversed)
       setChats((chat) => {
-        console.log(1, chat);
-        console.log(2, ...chats);
         return [...chat, ...msgReversed];
       });
       scrollToBottom();
     });
 
     // Update the chat if a new message is broadcasted.
-    socket.on("push", (msg) => {
-      console.log(msg);
+    socket.current.on("push", (msg) => {
+      console.log(2, msg);
       setChats((chat) => {
-        console.log(chat);
+        console.log(3, chat);
         return [...chat, msg]; 
       });
       scrollToBottom();
      });
-  
+    //  return socket.current.close()
 }, [])
 
 // Save the message the user is typing in the input field.
@@ -70,30 +64,34 @@ const handleContent=(event) =>{
 //   });
 // }
 
-const handleName=(event) => {
+const handleName = (event) => {
   setUserData((userData) => ({
     ...userData,
     user: {
       ...userData.user,
-      displayName: userData.user.displayName
+      displayName: userData.displayName
     }
   }));
 }
 
-const handleSubmit=(event)=> {
+const handleSubmit = async (event) => {
   // Prevent the form to reload the current page.
   event.preventDefault();
-
+  socket.current = io("http://localhost:8080");
   // Send the new message to the server.
-  socket.emit("message", {
-    author: username,
+  socket.current.emit("message", {
+    author: {
+      displayName: userData.displayName,
+      discriminator: userData.discriminator,
+      id: userData.id
+    },
     channel_id: 'testing',
-    content: content,
+    content: [content],
   });
-
+  setContent('')
   setChats((chat) =>
     // Update the chat with the user's message and remove the current message.
-    [...chat, { author: username, content: event.target.value /*state.content*/}]
+    [...chat, { author: {displayName: username}, content: event.target.value /*state.content*/}]
   );
   
   scrollToBottom();
@@ -106,7 +104,7 @@ return (
         return (
           <div key={index}>
             <Typography variant="caption" className="name">
-              {el.name}
+              {el.author.displayName}
             </Typography>
             <Typography variant="body1" className="content">
               {el.content}
@@ -120,7 +118,7 @@ return (
       handleContent={handleContent}
       handleName={handleName}
       handleSubmit={handleSubmit}
-      name={username}
+      author={username}
     />
   </div>
 )}
