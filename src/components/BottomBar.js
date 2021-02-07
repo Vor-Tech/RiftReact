@@ -74,7 +74,6 @@ export default function BottomBar(props) {
             ) : (
               <InputBase
               value={props.author}
-              placeholder={props.aut}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,

@@ -1,0 +1,2 @@
+- Get rid of message board on logout (refresh?)
+- Figure out how to implement webrtc

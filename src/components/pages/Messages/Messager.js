@@ -88,10 +88,12 @@ const handleSubmit = async (event) => {
     content: [content],
   });
   setContent('')
-  setChats((chat) =>
-    // Update the chat with the user's message and remove the current message.
-    [...chat, { author: {displayName: userData.displayName}, content: event.target.value /*state.content*/}]
-  );
+
+  //Removed because double author
+  // setChats((chat) =>
+  //   // Update the chat with the user's message and remove the current message.
+  //   [...chat, { author: {displayName: userData.displayName}, content: event.target.value /*state.content*/}]
+  // );
   
   scrollToBottom();
 }
