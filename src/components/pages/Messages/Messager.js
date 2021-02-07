@@ -20,7 +20,6 @@ export default function Messager() {
   
   const [content, setContent] = useState("");
   const [chats, setChats] = useState([]);
-  let username;
   const scrollToBottom=()=> {
     const chat = document.getElementById("chat");
     chat.scrollTop = chat.scrollHeight;
@@ -91,7 +90,7 @@ const handleSubmit = async (event) => {
   setContent('')
   setChats((chat) =>
     // Update the chat with the user's message and remove the current message.
-    [...chat, { author: {displayName: username}, content: event.target.value /*state.content*/}]
+    [...chat, { author: {displayName: userData.displayName}, content: event.target.value /*state.content*/}]
   );
   
   scrollToBottom();
@@ -118,7 +117,7 @@ return (
       handleContent={handleContent}
       handleName={handleName}
       handleSubmit={handleSubmit}
-      author={username}
+      author={userData.displayName}
     />
   </div>
 )}

@@ -73,13 +73,13 @@ export default function BottomBar(props) {
               />
             ) : (
               <InputBase
-              onChange={props.handleName}
-              value={props.name}
-              placeholder="Name"
+              value={props.author}
+              placeholder={props.aut}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              readOnly={true}
               inputProps={{ "aria-label": "name" }}
             />
             )}
