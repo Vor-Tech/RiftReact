@@ -3,10 +3,10 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Axios from "axios";
 import Header from "./components/layout/Header";
 import Home from "./components/pages/Home";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
+import Login from "./components/layout/auth/Login";
+import Register from "./components/layout/auth/Register";
 import UserContext from "./context/UserContext";
-import Messager from "./components/pages/Messages/Messager";
+import Messager from "./components/pages/Messager";
 
 import "./style.css";
 

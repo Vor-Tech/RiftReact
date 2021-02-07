@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import UserContext from "../context/UserContext";
+import UserContext from "../../context/UserContext";
 
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";

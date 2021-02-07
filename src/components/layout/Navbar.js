@@ -1,12 +1,12 @@
 import React from "react"
 import {Link} from "react-router-dom";
-import AuthOptions from "../auth/AuthOptions";
+import AuthOptions from "./auth/AuthOptions";
 
-export default function Navbar() {
+export default function Header() {
     return (
-        <div>
-            <Link to="/"><h1>Rift</h1></Link>
+        <header id="header">
+            <Link to="/" className="sidebar"></Link>
             <AuthOptions />
-        </div>
+        </header>
     )
 }

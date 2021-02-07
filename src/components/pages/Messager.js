@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import UserContext from "../../../context/UserContext";
+import UserContext from "../../context/UserContext";
 
 // import config from "./config";
 import io from "socket.io-client";
@@ -7,8 +7,8 @@ import io from "socket.io-client";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
-import BottomBar from "../../BottomBar";
-import "./Messager.css";
+import BottomBar from "../layout/BottomBar";
+import "../../assets/css/Messager.css";
 
 
 
@@ -87,7 +87,8 @@ const handleSubmit = async (event) => {
     channel_id: 'testing',
     content: [content],
   });
-  setContent('')
+  //clear input bar
+  setContent('');
 
   //Removed because double author
   // setChats((chat) =>
@@ -105,7 +106,7 @@ return (
         return (
           <div key={index}>
             <Typography variant="caption" className="name">
-              {el.author.displayName}
+              {el.author?.displayName}
             </Typography>
             <Typography variant="body1" className="content">
               {el.content}

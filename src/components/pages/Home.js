@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import Messager from './Messages/Messager';
+import Messager from './Messager';
 import UserContext from "../../context/UserContext";
 
 export default function Home() {

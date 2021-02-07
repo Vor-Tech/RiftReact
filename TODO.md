@@ -1,2 +1,5 @@
-- Get rid of message board on logout (refresh?)
+- Get rid of message board once logged out logout
 - Figure out how to implement webrtc
+- Use cookies
+- Fix author not being in state at login
+- Make author a clickable element that uses ProfileCard to show account info
