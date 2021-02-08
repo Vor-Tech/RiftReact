@@ -28,23 +28,25 @@ export default function Login() {
             <h2 className="page">Login</h2>
             
             <form onSubmit={submit}>
-                
-                <label htmlFor="login-email">Email</label>
+                <div>
+                <label htmlFor="login-email" style={{paddingRight: '.5%'}}>Email</label>
                     <input
                         id="login-email"
                         type="email"
                         onChange={e => setEmail(e.target.value)}
                     />
-
-                <label htmlFor="login-password">Password</label>
+                </div>
+                <div style={{paddingTop: '1%'}}>
+                <label htmlFor="login-password" style={{paddingRight: '.5%'}}>Password</label>
                     <input 
                         id="login-password"
                         type="password"
                         onChange={e => setPassword(e.target.value)}
                     />
-
-                <input type="submit" value="Login"/>
-
+                </div>
+                <div>
+                <input type="submit" value="Login" style={{paddingLeft: '1%', paddingTop: '1%'}} />
+                </div>
             </form>
         </div>
     )

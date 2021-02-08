@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import UserContext from "../../context/UserContext";
+import UserContext from "../../../context/UserContext";
 
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -61,24 +61,26 @@ export default function BottomBar(props) {
           <div className={classes.icon}>
             <FaceIcon />
           </div>
-            {userData.user ? (
+            {userData.displayName ? (
               <InputBase
-              value={userData.user.displayName}
-              script={userData.user.handleName}
+              value={userData.displayName+'#'+userData.discriminator}
+              script={userData.handleName}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+
+              readOnly={true}
               inputProps={{ "aria-label": "name", "aria-readonly": true }}
               />
             ) : (
               <InputBase
-              value={props.author}
+              value={'Name'}
+              onChange={props.handleName}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              readOnly={true}
               inputProps={{ "aria-label": "name" }}
             />
             )}

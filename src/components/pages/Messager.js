@@ -7,8 +7,9 @@ import io from "socket.io-client";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
-import BottomBar from "../layout/BottomBar";
+import BottomBar from "../layout/Messaging/BottomBar";
 import "../../assets/css/Messager.css";
+import { ButtonBase } from "@material-ui/core";
 
 
 
@@ -67,8 +68,7 @@ const handleName = (event) => {
   setUserData((userData) => ({
     ...userData,
     user: {
-      ...userData.user,
-      displayName: userData.displayName
+      ...userData.displayName
     }
   }));
 }
@@ -106,10 +106,10 @@ return (
         return (
           <div key={index}>
             <Typography variant="caption" className="name">
-              {el.author?.displayName}
+              <ButtonBase> {el.author?.displayName ? (el.author?.displayName+'#'+el.author?.discriminator) : ('Anonymous')} </ButtonBase> {/*TODO display sent_at on hover, hide tag until hover, fix onClick, make custom button*/}
             </Typography>
-            <Typography variant="body1" className="content">
-              {el.content}
+            <Typography variant="body1" className="content" style={{paddingLeft: '.75%'}}> {/*TODO add line wrapping and remove user tag if above message was sent by same user*/}
+              {el.content.length < 10000 ? el.content : alert("Message must be less than 10,000 characters")}
             </Typography>
           </div>
         );

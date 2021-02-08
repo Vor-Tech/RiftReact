@@ -1,5 +1,10 @@
-- Get rid of message board once logged out logout
-- Figure out how to implement webrtc
-- Use cookies
-- Fix author not being in state at login
-- Make author a clickable element that uses ProfileCard to show account info
+- [X] Fix author being displayed twice
+- [X] Disable message board on logout
+- [ ] Implement Redux
+- [ ] Implement delete message
+- [ ] Implement edit message
+- [ ] Implement webrtc
+- [ ] Use cookies
+- [ ] Fix author not being in state at login
+- [ ] Make author a clickable element that uses ProfileCard to show account info
+- [ ] Make user information in bottom left clickable to set status, similar to discord
