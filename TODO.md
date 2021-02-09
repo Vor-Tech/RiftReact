@@ -3,7 +3,7 @@
 - [ ] Implement Redux
 - [ ] Implement delete message
 - [ ] Implement edit message
-- [ ] Implement webrtc
+- [ ] Implement WebRTC
 - [ ] Use cookies
 - [ ] Fix author not being in state at login
 - [ ] Make author a clickable element that uses ProfileCard to show account info
