@@ -16,9 +16,10 @@ export default function Login() {
         const loginRes = await Axios.post("http://localhost:5000/users/login", loginUser);
 
         setUserData({
+            ...loginRes.data.user,
             token: loginRes.data.token,
-            user: loginRes.data.user,
         });
+
         localStorage.setItem("auth-token", loginRes.data.token);
         history.push("/");
     }
