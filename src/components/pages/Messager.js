@@ -3,6 +3,7 @@ import UserContext from "../../context/UserContext";
 
 // import config from "./config";
 import io from "socket.io-client";
+import Axios from 'axios';
 
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -17,7 +18,7 @@ export default function Messager() {
   
   const socket = useRef();
 
-  const {userData, setUserData} = useContext(UserContext);
+  const {userData, setUserData, token} = useContext(UserContext);
   
   const [content, setContent] = useState("");
   const [chats, setChats] = useState([]);
@@ -57,13 +58,6 @@ const handleContent=(event) =>{
   setContent(event.target.value);
 }
 
-//
-// function handleName(event) {
-//   setUserData(() => {
-//     if(!username) return {name: event.target.value}
-//   });
-// }
-
 const handleName = (event) => {
   setUserData((userData) => ({
     ...userData,
@@ -74,17 +68,18 @@ const handleName = (event) => {
 }
 
 const handleSubmit = async (event) => {
-  // Prevent the form to reload the current page.
   event.preventDefault();
   socket.current = io("http://localhost:8080");
   // Send the new message to the server.
   socket.current.emit("message", {
+    id: `m${userData.id+Date.now()}testing`,
     author: {
       displayName: userData.displayName,
       discriminator: userData.discriminator,
       id: userData.id
     },
-    channel_id: 'testing',
+    channel: {id: 'testing'},
+    guild_id: 'testing',
     content: [content],
   });
   //clear input bar
@@ -99,6 +94,13 @@ const handleSubmit = async (event) => {
   scrollToBottom();
 }
 
+const deleteMessage = (id) => {
+  Axios.delete(
+    `http://localhost:5000/api/v1/guilds/1/1/messages/${id}`, //TODO adapt users/ api endpoint for resolving with token 
+    {headers: {"x-auth-token": token}}
+)
+}
+
 return (
   <div className="App">
     <Paper id="chat" elevation={3}>
@@ -106,11 +108,14 @@ return (
         return (
           <div key={index}>
             <Typography variant="caption" className="name">
-              <ButtonBase> {el.author?.displayName ? (el.author?.displayName+'#'+el.author?.discriminator) : ('Anonymous')} </ButtonBase> {/*TODO display sent_at on hover, hide tag until hover, fix onClick, make custom button*/}
+              <ButtonBase> {el.author?.displayName ? (el.author?.displayName+'#'+el.author?.discriminator) : ('Anonymous') || ""} </ButtonBase> {/*TODO display sent_at on hover, hide tag until hover, fix onClick, make custom button*/}
+              
+              <ButtonBase onClick={() => deleteMessage(el.id)}>Delete</ButtonBase>
             </Typography>
             <Typography variant="body1" className="content" style={{paddingLeft: '.75%'}}> {/*TODO add line wrapping and remove user tag if above message was sent by same user*/}
               {el.content.length < 10000 ? el.content : alert("Message must be less than 10,000 characters")}
             </Typography>
+            <small>Message ID: {el.id ? el.id : ''}</small>
           </div>
         );
       })}

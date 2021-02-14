@@ -63,7 +63,7 @@ export default function BottomBar(props) {
           </div>
             {userData.displayName ? (
               <InputBase
-              value={userData.displayName+'#'+userData.discriminator}
+              value={userData.displayName+'#'+userData.discriminator || ""}
               script={userData.handleName}
               classes={{
                 root: classes.inputRoot,
@@ -75,7 +75,7 @@ export default function BottomBar(props) {
               />
             ) : (
               <InputBase
-              value={'Name'}
+              value={'Anonymous'}
               onChange={props.handleName}
               classes={{
                 root: classes.inputRoot,
@@ -92,7 +92,7 @@ export default function BottomBar(props) {
             </div>
             <InputBase
               onChange={props.handleContent}
-              value={props.content}
+              value={props.content || ""}
               placeholder="Type your message..."
               classes={{
                 root: classes.inputRoot,

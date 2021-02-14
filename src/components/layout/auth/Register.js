@@ -16,11 +16,11 @@ export default function Register() {
         e.preventDefault();
         const newUser = {email, password, passwordCheck, displayName};
         await Axios.post(
-            "http://localhost:5000/users/",
+            "http://localhost:5000/api/v1/users/",
             newUser
         );
         const loginRes = await Axios.post(
-            "http://localhost:5000/users/login", {
+            "http://localhost:5000/api/v1/users/login", {
                 email,
                 password
         });

@@ -24,7 +24,7 @@ export default function App() {
                 localStorage.setItem("auth-token", "");
             }
             const tokenRes = await Axios.get(
-                "http://localhost:5000/users/resolve-token", //TODO adapt users/ api endpoint for resolving with token 
+                "http://localhost:5000/api/v1/users/resolve-token-full", //TODO adapt users/ api endpoint for resolving with token 
                 {headers: {"x-auth-token": storageToken}}
             );
             setToken(tokenRes)
